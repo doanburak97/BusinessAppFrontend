@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         "\nSelected Company : " + company);
                 tv_prediction.setText("Buraya tahmin edilmiş veri gelecek.");
 
-                String url = "http://10.0.2.2:5000/predict?dataset="+company+"&start_date="+startDate+"+&end_date="+endDate;
+                String url = "http://10.0.2.2:5000/predict?dataset="+company+"&start_date="+startDate+"&end_date="+endDate;
                 System.out.println(url);
 
 
