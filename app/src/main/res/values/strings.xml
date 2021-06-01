@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BusinessAppFrontend</string>
+    <color name="color">#ECF0F1</color>
 </resources>
