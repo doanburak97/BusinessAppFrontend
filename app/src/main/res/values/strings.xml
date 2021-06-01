@@ -1,4 +1,37 @@
 <resources>
     <string name="app_name">BusinessAppFrontend</string>
     <color name="color">#ECF0F1</color>
+
+    <string-array name="companies">
+        <item>Facebook</item>
+        <item>Apple</item>
+        <item>Twitter</item>
+        <item>Microsoft</item>
+        <item>Amazon</item>
+        <item>Intel</item>
+        <item>Netflix</item>
+        <item>Tesla</item>
+        <item>IBM</item>
+        <item>Oracle</item>
+        <item>AMD</item>
+        <item>NVIDIA</item>
+        <item>DELL</item>
+    </string-array>
+
+    <string-array name="dataName">
+        <item>FB</item>
+        <item>AAPL</item>
+        <item>TWTR</item>
+        <item>MSFT</item>
+        <item>AMZN</item>
+        <item>INTC</item>
+        <item>NFLX</item>
+        <item>TSLA</item>
+        <item>IBM</item>
+        <item>ORCL</item>
+        <item>AMD</item>
+        <item>NVDA</item>
+        <item>DELL</item>
+    </string-array>
+
 </resources>
