@@ -80,22 +80,32 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         "\nSelected Company : " + company);
                 tv_prediction.setText("Buraya tahmin edilmiş veri gelecek.");
 
-                String url = "";
-                StringRequest sr = new StringRequest(Request.Method.POST, url,
+                String url = "http://10.0.2.2:5000/predict?dataset="+company+"&start_date="+startDate+"&end_date="+endDate;
+                System.out.println(url);
+
+
+
+                StringRequest sr = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(MainActivity.this, response.trim(), Toast.LENGTH_SHORT).show();
+                                /*Toast.makeText(MainActivity.this, response.trim(), Toast.LENGTH_SHORT).show();*/
+
+                                System.out.println(response);
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+/*
                                 Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+*/
                             }
                         }){
                     protected Map<String, String> getParams(){
                         Map<String, String> params = new HashMap<>();
+
+                        params.put("dataset",company);
                         params.put("startDate",startDate);
                         params.put("endDate",endDate);
 
@@ -145,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         };
 
         new DatePickerDialog(MainActivity.this,dateSetListener,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
+
 
     }
 
