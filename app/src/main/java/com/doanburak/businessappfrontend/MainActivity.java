@@ -98,20 +98,10 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.MONTH,month);
                 calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
 
-                TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        calendar.set(Calendar.MINUTE,minute);
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("YY-MM-dd");
 
-                        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yy-MM-dd HH:mm");
-
-                        date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
-                        startDate = simpleDateFormat.format(calendar.getTime());
-                    }
-                };
-
-                new TimePickerDialog(MainActivity.this,timeSetListener,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
+                date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
+                startDate = simpleDateFormat.format(calendar.getTime());
             }
         };
 
@@ -128,20 +118,10 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.MONTH,month);
                 calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
 
-                TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        calendar.set(Calendar.MINUTE,minute);
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("YY-MM-dd");
 
-                        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yy-MM-dd HH:mm");
-
-                        date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
-                        endDate = simpleDateFormat.format(calendar.getTime());
-                    }
-                };
-
-                new TimePickerDialog(MainActivity.this,timeSetListener,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false).show();
+                date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
+                endDate = simpleDateFormat.format(calendar.getTime());
             }
         };
 
