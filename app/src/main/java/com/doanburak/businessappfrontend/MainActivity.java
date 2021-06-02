@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +13,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,6 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,10 +33,11 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+
     Spinner sp_company;
     EditText start_date_time_input, end_date_time_input;
-    TextView tv_startAndEndDate, tv_prediction;
-    String startDate, endDate, company;
+    TextView tv_date, tv_predictValue, tv_actualValue;
+    String startDate, endDate, company, date, prediction, actual;
     Button btn_send;
 
     @Override
@@ -46,8 +48,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         sp_company = findViewById(R.id.sp_company);
         start_date_time_input = findViewById(R.id.start_date_time_input);
         end_date_time_input = findViewById(R.id.end_date_time_input);
-        tv_startAndEndDate = findViewById(R.id.tv_startAndEndDate);
-        tv_prediction = findViewById(R.id.tv_prediction);
+        tv_date = findViewById(R.id.tv_date);
+        tv_predictValue = findViewById(R.id.tv_predictValue);
+        tv_actualValue = findViewById(R.id.tv_actualValue);
         btn_send = findViewById(R.id.btn_send);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.companies, android.R.layout.simple_spinner_item);
@@ -76,22 +79,39 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     return;
                 }
 
-                tv_startAndEndDate.setText("Selected dates : " + "\n" + startDate + " " + endDate +
-                        "\nSelected Company : " + company);
-                tv_prediction.setText("Buraya tahmin edilmiş veri gelecek.");
+                tv_date.setText("Data is being pulled...");
+                tv_predictValue.setText("Data is being pulled...");
+                tv_actualValue.setText("Data is being pulled...");
+
+                btn_send.setEnabled(false);
 
                 String url = "http://10.0.2.2:5000/predict?dataset="+company+"&start_date="+startDate+"&end_date="+endDate;
                 System.out.println(url);
-
-
 
                 StringRequest sr = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                /*Toast.makeText(MainActivity.this, response.trim(), Toast.LENGTH_SHORT).show();*/
-
                                 System.out.println(response);
+                                JSONObject obj = null;
+                                try {
+                                    obj = new JSONObject(response);
+                                    date = obj.getJSONObject("data").getString("date");
+                                    prediction = obj.getJSONObject("data").getString("prediction");
+                                    actual = obj.getJSONObject("data").getString("Actual");
+
+                                    System.out.println(date + " " + prediction + " " + actual);
+                                    tv_date.setText("Date : " + date);
+                                    tv_predictValue.setText("Predicted Value : " + prediction);
+                                    tv_actualValue.setText("Actual Value : " + actual);
+
+                                    btn_send.setEnabled(true);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
                             }
                         },
                         new Response.ErrorListener() {
@@ -99,7 +119,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             public void onErrorResponse(VolleyError error) {
 /*
                                 Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-*/
+*/                                System.out.println(error.toString());
+
                             }
                         }){
                     protected Map<String, String> getParams(){
